@@ -1,0 +1,3 @@
+15072024	 12:25:32	0a0480c2-6e99-4cdf-81af-194d8e339b06	Error 	 cors blocked for your site :(
+15072024	 12:53:01	cf6fdd7b-5367-45b3-acad-350b13bc4187	Error 	 ENOENT: no such file or directory, stat '/home/binaryshade/Desktop/node/express/views/clients/client2.html'
+15072024	 14:26:44	1a13fbd5-7e28-473d-b255-c0a6d9745e58	Error 	 ENOENT: no such file or directory, stat '/home/binaryshade/Desktop/node/express/routes/views/index.html'

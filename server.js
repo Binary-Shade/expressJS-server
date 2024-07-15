@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 3200;
 const logEvents = require('./logEvent.js')
 const cors = require('cors')
+const errorHandle = require('./errorHandle.js')
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -12,7 +13,7 @@ app.use(express.json());
 const whiteList = ['http://localhost:3200', 'https://google.com']
 const corsOption = {
     origin: (origin, callback) =>{
-        if(whiteList.indexOf(origin) !== -1){
+        if(whiteList.indexOf(origin) !== -1 || !origin ){
             callback(null, true)
         }else{
             callback(new Error('cors blocked for your site :('))
@@ -32,22 +33,10 @@ app.use((req, res, next) => {
     next();
 });
 
-// Route handlers
-app.get('^/$|/index(.html)?', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'index.html'));
-});
+app.use('/clients', require('./routes/routes.js'))
+app.use('/', require('./routes/root.js'))
 
-app.get('/new-page(.html)?', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'new-page.html'));
-});
-
-app.get('/old-page(.html)?', (req, res) => {
-    res.redirect(301, '/new-page.html');
-});
-
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'error.html'));
-});
+app.use(errorHandle)
 
 app.listen(PORT, () => {
     console.log('Server running on port ' + PORT);
